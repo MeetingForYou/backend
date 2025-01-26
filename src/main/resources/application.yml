@@ -1,0 +1,39 @@
+server:
+  port: 8090
+  max-http-request-header-size: 1048576
+
+spring:
+  datasource:
+    # ????????
+    master:
+      url: jdbc:mysql://47.130.53.29:3306/meeting-for-you
+      username: root
+      password: liuxingzhao
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        minimum-idle: 5
+        maximum-pool-size: 10
+        pool-name: HikariCP_Master
+        idle-timeout: 30000
+        max-lifetime: 600000
+
+    # ????????
+    slave:
+      url: jdbc:mysql://47.130.53.29:3307/meeting-for-you
+      username: root
+      password: liuxingzhao
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        minimum-idle: 5
+        maximum-pool-size: 10
+        pool-name: HikariCP_Slave
+        idle-timeout: 30000
+        max-lifetime: 600000
+
+  # MyBatis ??
+  mybatis:
+    mapper-locations: classpath:backend/mapper/*.xml
+    type-aliases-package: backend.model.entity
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
