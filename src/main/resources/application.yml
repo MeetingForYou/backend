@@ -3,37 +3,41 @@ server:
   max-http-request-header-size: 1048576
 
 spring:
+  profiles:
+    active: dev
+
   datasource:
-    # ????????
     master:
-      url: jdbc:mysql://47.130.53.29:3306/meeting-for-you
-      username: root
-      password: liuxingzhao
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      hikari:
-        minimum-idle: 5
-        maximum-pool-size: 10
-        pool-name: HikariCP_Master
-        idle-timeout: 30000
-        max-lifetime: 600000
+      url: ${application.datasource.master.url}
+      username: ${application.datasource.master.username}
+      password: ${application.datasource.master.password}
+      driver-class-name: ${application.datasource.master.driver-class-name}
 
-    # ????????
     slave:
-      url: jdbc:mysql://47.130.53.29:3307/meeting-for-you
-      username: root
-      password: liuxingzhao
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      hikari:
-        minimum-idle: 5
-        maximum-pool-size: 10
-        pool-name: HikariCP_Slave
-        idle-timeout: 30000
-        max-lifetime: 600000
+      url: ${application.datasource.slave.url}
+      username: ${application.datasource.slave.username}
+      password: ${application.datasource.slave.password}
+      driver-class-name: ${application.datasource.slave.driver-class-name}
 
-  # MyBatis ??
+    hikari:
+      minimum-idle: ${application.datasource.hikari.minimum-idle}
+      maximum-pool-size: ${application.datasource.hikari.maximum-pool-size}
+      pool-name: ${application.datasource.hikari.pool-name}
+      idle-timeout: ${application.datasource.hikari.idle-timeout}
+      max-lifetime: ${application.datasource.hikari.max-lifetime}
+
+  redis:
+    master:
+      host: 192.168.1.100
+      port: 6379
+    slave:
+      host: 192.168.1.101
+      port: 6380
+
+
   mybatis:
-    mapper-locations: classpath:backend/mapper/*.xml
-    type-aliases-package: backend.model.entity
+    mapper-locations: ${application.mybatis.mapper-locations}
+    type-aliases-package: ${application.mybatis.type-aliases-package}
     configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+      log-impl: ${application.mybatis.configuration.log-impl}
 

@@ -1,0 +1,26 @@
+application:
+  datasource:
+    master:
+      url: jdbc:mysql://47.130.53.29:3306/meeting-for-you
+      username: root
+      password: liuxingzhao
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    slave:
+      url: jdbc:mysql://47.130.53.29:3307/meeting-for-you
+      username: root
+      password: liuxingzhao
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      pool-name: HikariCP_Master
+      idle-timeout: 30000
+      max-lifetime: 600000
+
+  mybatis:
+    mapper-locations: classpath:backend/mapper/*.xml
+    type-aliases-package: backend.model.entity
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

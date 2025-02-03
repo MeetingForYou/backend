@@ -1,9 +1,12 @@
 package backend.datasource;
 
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,27 +20,79 @@ import java.util.Map;
 @Configuration
 public class DynamicDataSourceRouter {
 
-    // 主库数据源（写库）
+    // 主库配置
+    @Value("${spring.datasource.master.url}")
+    private String masterUrl;
+
+    @Value("${spring.datasource.master.username}")
+    private String masterUsername;
+
+    @Value("${spring.datasource.master.password}")
+    private String masterPassword;
+
+    @Value("${spring.datasource.master.driver-class-name}")
+    private String masterDriverClassName;
+
+    // 从库配置
+    @Value("${spring.datasource.slave.url}")
+    private String slaveUrl;
+
+    @Value("${spring.datasource.slave.username}")
+    private String slaveUsername;
+
+    @Value("${spring.datasource.slave.password}")
+    private String slavePassword;
+
+    @Value("${spring.datasource.slave.driver-class-name}")
+    private String slaveDriverClassName;
+
+    // 连接池配置
+    @Value("${spring.datasource.hikari.minimum-idle}")
+    private int minimumIdle;
+
+    @Value("${spring.datasource.hikari.maximum-pool-size}")
+    private int maximumPoolSize;
+
+    @Value("${spring.datasource.hikari.pool-name}")
+    private String poolName;
+
+    @Value("${spring.datasource.hikari.idle-timeout}")
+    private long idleTimeout;
+
+    @Value("${spring.datasource.hikari.max-lifetime}")
+    private long maxLifetime;
+
+    // 主库连接池
     @Primary
-    @Bean
+    @Bean(name = "masterDataSource")
     public DataSource masterDataSource() {
-        return DataSourceBuilder.create()
-                .url("jdbc:mysql://47.130.53.29:3306/meeting-for-you")
-                .username("root")
-                .password("liuxingzhao")
-                .driverClassName("com.mysql.cj.jdbc.Driver")
-                .build();
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(masterUrl);
+        config.setUsername(masterUsername);
+        config.setPassword(masterPassword);
+        config.setDriverClassName(masterDriverClassName);
+        config.setMinimumIdle(minimumIdle);
+        config.setMaximumPoolSize(maximumPoolSize);
+        config.setPoolName(poolName);
+        config.setIdleTimeout(idleTimeout);
+        config.setMaxLifetime(maxLifetime);
+        return new HikariDataSource(config);
     }
 
-    // 从库数据源配置（读库）
+    // 从库连接池
     @Bean(name = "slaveDataSource")
     public DataSource slaveDataSource() {
-        return DataSourceBuilder.create()
-                .url("jdbc:mysql://47.130.53.29:3307/meeting-for-you")
-                .username("root")
-                .password("liuxingzhao")
-                .driverClassName("com.mysql.cj.jdbc.Driver")
-                .build();
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(slaveUrl);
+        config.setUsername(slaveUsername);
+        config.setPassword(slavePassword);
+        config.setDriverClassName(slaveDriverClassName);
+        config.setMinimumIdle(minimumIdle);
+        config.setMaximumPoolSize(maximumPoolSize);
+        config.setPoolName(poolName + "_Slave");
+        config.setIdleTimeout(idleTimeout);
+        config.setMaxLifetime(maxLifetime);
+        return new HikariDataSource(config);
     }
 
     // 动态数据源
