@@ -19,6 +19,16 @@ application:
       idle-timeout: 30000
       max-lifetime: 600000
 
+  redis:
+    master:
+      host: 47.130.53.29
+      port: 6379
+      password: liuxingzhao
+    slave:
+      host: 47.130.53.29
+      port: 6380
+      password: liuxingzhao
+
   mybatis:
     mapper-locations: classpath:backend/mapper/*.xml
     type-aliases-package: backend.model.entity

@@ -28,12 +28,13 @@ spring:
 
   redis:
     master:
-      host: 192.168.1.100
-      port: 6379
+      host: ${application.redis.master.host}
+      port: ${application.redis.master.port}
+      password: ${application.redis.master.password}
     slave:
-      host: 192.168.1.101
-      port: 6380
-
+      host: ${application.redis.slave.host}
+      port: ${application.redis.slave.host}
+      password: ${application.redis.slave.host}
 
   mybatis:
     mapper-locations: ${application.mybatis.mapper-locations}
