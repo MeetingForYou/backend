@@ -73,7 +73,7 @@ public class DynamicDataSourceRouter {
         config.setDriverClassName(masterDriverClassName);
         config.setMinimumIdle(minimumIdle);
         config.setMaximumPoolSize(maximumPoolSize);
-        config.setPoolName(poolName);
+        config.setPoolName(poolName + "_Master");
         config.setIdleTimeout(idleTimeout);
         config.setMaxLifetime(maxLifetime);
         return new HikariDataSource(config);

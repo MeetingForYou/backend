@@ -1,5 +1,6 @@
 package backend.redis;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -11,13 +12,31 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 @Configuration
 public class RedisConfig {
 
+    @Value("${spring.redis.master.host}")
+    private String masterHostName;
+
+    @Value("${spring.redis.master.port}")
+    private String masterPort;
+
+    @Value("${spring.redis.master.password}")
+    private String masterPassword;
+
+    @Value("${spring.redis.slave.host}")
+    private String slaveHostName;
+
+    @Value("${spring.redis.slave.port}")
+    private String slavePort;
+
+    @Value("${spring.redis.slave.password}")
+    private String slavePassword;
+
     @Bean("masterRedisConnectionFactory")
     @Primary
     public RedisConnectionFactory masterRedisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName("47.130.53.29"); // 主节点 IP
-        config.setPort(6379); // 主节点端口
-        config.setPassword("liuxingzhao"); // 如果有密码
+        config.setHostName(masterHostName);
+        config.setPort(Integer.parseInt(masterPort));
+        config.setPassword(masterPassword);
 
         return new LettuceConnectionFactory(config, LettucePoolingClientConfiguration.defaultConfiguration());
     }
@@ -25,9 +44,9 @@ public class RedisConfig {
     @Bean("slaveRedisConnectionFactory")
     public RedisConnectionFactory slaveRedisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName("47.130.53.29"); // 从节点 IP
-        config.setPort(6380); // 从节点端口
-        config.setPassword("liuxingzhao"); // 如果有密码
+        config.setHostName(slaveHostName);
+        config.setPort(Integer.parseInt(slavePort));
+        config.setPassword(slavePassword);
 
         return new LettuceConnectionFactory(config, LettucePoolingClientConfiguration.defaultConfiguration());
     }

@@ -33,8 +33,17 @@ spring:
       password: ${application.redis.master.password}
     slave:
       host: ${application.redis.slave.host}
-      port: ${application.redis.slave.host}
+      port: ${application.redis.slave.port}
       password: ${application.redis.slave.host}
+
+  aws:
+    s3:
+      accesskey: mXWS1OkSfUcoklnZ
+      secretkey: zWL5n36GRVYqSHS1VLxOQRuCL6tsLjBD
+      region: auto
+      endpoint: https://resources.meetingforyou.site
+      bucket: meeting-for-you
+      path-style-access: true
 
   mybatis:
     mapper-locations: ${application.mybatis.mapper-locations}

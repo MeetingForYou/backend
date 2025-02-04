@@ -15,7 +15,7 @@ application:
     hikari:
       minimum-idle: 5
       maximum-pool-size: 10
-      pool-name: HikariCP_Master
+      pool-name: DBPool
       idle-timeout: 30000
       max-lifetime: 600000
 
