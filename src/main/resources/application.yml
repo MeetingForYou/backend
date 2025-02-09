@@ -45,9 +45,22 @@ spring:
       bucket: meeting-for-you
       path-style-access: true
 
+  jwt:
+    secretkey: ${application.jwt.secretkey}
+    freshTokenExpiration: ${application.jwt.freshTokenExpiration}
+    accessTokenExpiration: ${application.jwt.accessTokenExpiration}
+    token-name: ${application.jwt.token-name}
+    uid: ${application.jwt.uid}
+    role: ${application.jwt.role}
+
   mybatis:
     mapper-locations: ${application.mybatis.mapper-locations}
     type-aliases-package: ${application.mybatis.type-aliases-package}
     configuration:
       log-impl: ${application.mybatis.configuration.log-impl}
 
+logging:
+  file:
+    name: log/log.log
+  level:
+    root: INFO

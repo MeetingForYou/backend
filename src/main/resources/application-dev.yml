@@ -29,6 +29,14 @@ application:
       port: 6380
       password: liuxingzhao
 
+  jwt:
+    secretkey: VHJ1c3R3b3JrT3BhZHVzJTIwU2VjdXJlU2VjcmV0Q29tcGxleEJ0b2xkY29tcGxleENvbmZpZyUyMExhcmdlU2VjcmV0S2V5
+    freshTokenExpiration: 2592000000 #30 days
+    accessTokenExpiration: 25920000000 # 30 days
+    token-name: Authorization
+    uid: uid # Private token claims
+    role: role
+
   mybatis:
     mapper-locations: classpath:backend/mapper/*.xml
     type-aliases-package: backend.model.entity
