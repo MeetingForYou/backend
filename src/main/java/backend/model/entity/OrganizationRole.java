@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrganizationRoles {
+public class OrganizationRole {
 
     private Integer id;
 
@@ -24,8 +26,8 @@ public class OrganizationRoles {
 
     private Boolean isDeleted;
 
-    private String createdTime;
+    private LocalDateTime createdTime;
 
-    private String updatedTime;
+    private LocalDateTime updatedTime;
 
 }

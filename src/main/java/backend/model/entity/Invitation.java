@@ -1,2 +1,13 @@
-package backend.model.entity;public class Invitation {
+package backend.model.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Invitation {
 }
